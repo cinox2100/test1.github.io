@@ -1,0 +1,147 @@
+/* Genel ayarlar */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container ayarları */
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 320px;
+}
+
+/* Input ayarları */
+input[type="number"] {
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Button ayarları */
+button {
+    padding: 12px 25px;
+    background-color: #ff0000; /* Kırmızı renk */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Sonuç kutusu ayarları */
+#result {
+    margin-top: 20px;
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    text-align: left;
+    display: none; /* Başlangıçta gizli */
+}
+
+/* Başarı ve hata mesajları */
+.success {
+    background-color: #d4edda; /* Yeşil arka plan */
+    color: #155724; /* Yeşil yazı rengi */
+    border: 1px solid #c3e6cb;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1em;
+    display: block;
+}
+
+.error {
+    background-color: #f8d7da; /* Kırmızı arka plan */
+    color: #721c24; /* Kırmızı yazı rengi */
+    border: 1px solid #f5c6cb;
+    font-weight: bold;
+}
+
+/* Kişisel bilgiler kutusu */
+.personal-details {
+    color: red; /* Kırmızı başlık rengi */
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-top: 20px;
+    text-align: left;
+    background-color: #ffffff; /* Arka plan rengi */
+    border-radius: 5px;
+    display: none; /* Başlangıçta gizli */
+    padding: 10px;
+    border: 1px solid #ced4da; /* Arka plan rengi ile uyumlu */
+}
+
+.personal-details span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.personal-details .heading {
+    color: red; /* Kırmızı başlık rengi */
+    font-weight: bold;
+}
+
+.personal-details .info {
+    color: black; /* Siyah bilgi rengi */
+}
+
+.personal-details .name,
+.personal-details .surname {
+    color: black; /* Siyah isim ve soyisim rengi */
+}
+
+/* Animasyon */
+.animate {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Gizlilik politikası */
+.privacy-policy {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.privacy-policy a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.privacy-policy a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+    font-size: 0.8em;
+    color: #6c757d;
+}

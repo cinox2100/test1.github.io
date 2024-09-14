@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorgulama Sitesi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f1f3f5;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 420px;
+        }
+        input[type="number"] {
+            padding: 16px;
+            margin: 15px 0;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1.2em;
+            transition: border-color 0.3s ease;
+        }
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            padding: 16px 32px;
+            background-color: #dc3545; /* Kırmızı renk */
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #c82333; /* Koyu kırmızı */
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        #result, #error {
+            display: none; /* Başlangıçta gizli */
+            margin-top: 25px;
+            font-size: 1em;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            font-weight: bold;
+            display: block;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            font-weight: bold;
+            display: block;
+        }
+        .personal-details {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-top: 20px;
+            text-align: left;
+            background-color: #ffffff;
+            border-radius: 8px;
+            display: none;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            color: black;
+        }
+        .personal-details div {
+            margin-bottom: 10px;
+        }
+        .personal-details .label {
+            color: red; /* Kırmızı başlık rengi */
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .animate {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="queryImage" src="https://upload.wikimedia.org/wikipedia/commons/7/76/Spor_Toto_logo.png" alt="Sorgulama Görseli" style="width: 100%; max-width: 250px; margin-bottom: 20px;">
+        <form id="queryForm">
+            <label for="inputData">SporToto - İkramiye Sorgulama:</label>
+            <input type="number" id="inputData" name="inputData" placeholder="Kodunuzu girin" required>
+            <button type="submit">Sorgula</button>
+        </form>
+        <div id="result" class="success"></div>
+        <div id="error" class="error"></div>
+        <div class="personal-details" id="personalDetails"></div>
+        
+        <!-- Gizlilik Politikası ve Telif Hakkı Yazısı -->
+        <div class="footer">
+            <p><a href="#">Spor Toto Teşkilat Başkanlığı ™</a></p>
+            <p>© 2023 Tüm hakları saklıdır</p>
+        </div>
+    </div>
+
+    <script>
+        const winners = {
+            '012345678912': { name: 'Ali', surname: 'Veli', amount: '10,000 TL', description: 'Süper çekiliş ikramiyesi' },
+            '123456789012': { name: 'Ayşe', surname: 'Yılmaz', amount: '5,000 TL', description: 'Şanslı çekiliş ödülü' },
+            '234567890123': { name: 'Eyüp', surname: 'salta', amount: '21.420.000 TL', description: 'İKRAMİYE TRANSFERİNİZ İÇİN 3.600,00₺ SPORTOTO HAVALE ÖDEMESİ YATIRILDIKTAN SONRA HESABINIZA AKTARIMINIZ SAĞLANACAKTIR.' },
+            '345678901234': { name: 'Fatma', surname: 'Kara', amount: '2,000 TL', description: 'Yılbaşı çekilişi ödülü' },
+            '456789012345': { name: 'Ahmet', surname: 'Çelik', amount: '12,000 TL', description: 'Büyük ödül' },
+            '567890123456': { name: 'Zeynep', surname: 'Aydın', amount: '8,000 TL', description: 'Yılsonu çekilişi ödülü' },
+            '678901234567': { name: 'Mustafa', surname: 'Koç', amount: '6,000 TL', description: 'Güzellik ödülü' },
+            '789012345678': { name: 'Emine', surname: 'Çetin', amount: '4,000 TL', description: 'Yıldönümü ödülü' },
+            '890123456789': { name: 'Hüseyin', surname: 'Yalçın', amount: '3,000 TL', description: 'Şanslı ödül' },
+            '901234567890': { name: 'Hale', surname: 'Kara', amount: '15,000 TL', description: 'Dev çekiliş' },
+        };
+
+        document.getElementById('queryForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const inputData = document.getElementById('inputData').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+            const personalDetailsDiv = document.getElementById('personalDetails');
+
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            personalDetailsDiv.style.display = 'none';
+
+            if (winners[inputData]) {
+                const winner = winners[inputData];
+                resultDiv.className = 'success animate';
+                resultDiv.innerHTML = `<p>✓ İkramiye Tutmuştur !</p>`;
+                resultDiv.style.display = 'block';
+                personalDetailsDiv.style.display = 'block';
+                personalDetailsDiv.innerHTML = `
+                    <div><span class="label">İkramiye Sahibi:</span></div>
+                    <div><span class="label">İsim:</span> ${winner.name}</div>
+                    <div><span class="label">Soyisim:</span> ${winner.surname}</div>
+                    <div><span class="label">İkramiye Tutarı:</span> ${winner.amount}</div>
+                    <div><span class="label">Durum:</span> ${winner.description}</div>
+                `;
+            } else {
+                errorDiv.className = 'error animate';
+                errorDiv.textContent = 'İkramiye Tutmamıştır !';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
